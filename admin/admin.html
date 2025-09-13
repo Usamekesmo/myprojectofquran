@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المدير</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen" class="container">
+        <h1>تسجيل دخول المدير</h1>
+        <input type="email" id="admin-email" placeholder="البريد الإلكتروني" required>
+        <input type="password" id="admin-password" placeholder="كلمة المرور" required>
+        <button id="admin-login-button">دخول</button>
+        <p id="login-error" class="error-message"></p>
+    </div>
+
+    <!-- لوحة التحكم الرئيسية -->
+    <div id="admin-panel" class="hidden">
+        <header class="admin-header">
+            <h1>لوحة التحكم</h1>
+            <div>
+                <span id="admin-user-email"></span>
+                <button id="logout-button">تسجيل الخروج</button>
+            </div>
+        </header>
+
+        <!-- ▼▼▼ تم تحديث شريط التبويبات ▼▼▼ -->
+        <div class="tabs-navigation">
+            <button class="tab-button active" data-tab="dashboard-tab">لوحة المعلومات</button>
+            <button class="tab-button" data-tab="players-tab">إدارة اللاعبين</button>
+            <button class="tab-button" data-tab="questions-tab">إدارة الأسئلة</button>
+            <button class="tab-button" data-tab="store-tab">إدارة المتجر</button>
+            <button class="tab-button" data-tab="quests-tab">إدارة المهام</button>
+            <button class="tab-button" data-tab="challenges-tab">إدارة التحديات</button>
+            <button class="tab-button" data-tab="moderation-tab">سجل النشاط</button>
+            <button class="tab-button" data-tab="analytics-tab">التحليلات</button>
+        </div>
+
+        <div class="tab-content-container">
+            <!-- 1. لوحة المعلومات (تبقى كما هي) -->
+            <div id="dashboard-tab" class="tab-content active">
+                <h2>نظرة عامة</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">إجمالي اللاعبين</div>
+                        <div class="stat-value" id="total-players">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">إجمالي الاختبارات</div>
+                        <div class="stat-value" id="total-quizzes">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">الفائزون بالمواسم</div>
+                        <div class="stat-value" id="total-season-winners">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. إدارة اللاعبين (تم تحديث الجدول) -->
+            <div id="players-tab" class="tab-content hidden">
+                <h2>إدارة اللاعبين</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>الاسم</th>
+                                <th>البريد</th>
+                                <th>الخبرة</th>
+                                <th>الألماس</th>
+                                <th>خبرة الموسم</th>
+                                <th>المحاولات</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="players-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3. إدارة الأسئلة (تم تحديث الجدول) -->
+            <div id="questions-tab" class="tab-content hidden">
+                <h2>إدارة قواعد الأسئلة</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>المستوى الأدنى</th>
+                                <th>المسار المطلوب</th>
+                                <th>عدد الخيارات</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="questions-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. إدارة المتجر (تبقى كما هي) -->
+            <div id="store-tab" class="tab-content hidden">
+                <h2>إدارة المتجر</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>الاسم</th>
+                                <th>السعر</th>
+                                <th>النوع</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="store-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 5. تبويب إدارة المهام (جديد بالكامل) -->
+            <div id="quests-tab" class="tab-content hidden">
+                <h2>إدارة المهام</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>العنوان</th>
+                                <th>النوع</th>
+                                <th>الهدف</th>
+                                <th>مكافأة XP</th>
+                                <th>مكافأة ألماس</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quests-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 6. تبويب إدارة التحديات (جديد بالكامل) -->
+            <div id="challenges-tab" class="tab-content hidden">
+                <h2>إدارة التحديات الخاصة</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>العنوان</th>
+                                <th>النوع</th>
+                                <th>الهدف</th>
+                                <th>مكافأة XP</th>
+                                <th>مكافأة ألماس</th>
+                                <th>نشط؟</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="challenges-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 7. أدوات الإشراف (تبقى كما هي) -->
+            <div id="moderation-tab" class="tab-content hidden">
+                <h2>سجل نشاط اللاعبين</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>الوقت</th>
+                                <th>اللاعب</th>
+                                <th>النشاط</th>
+                                <th>التفاصيل</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 8. التحليلات (تبقى كما هي) -->
+            <div id="analytics-tab" class="tab-content hidden">
+                <h2>التحليلات</h2>
+                <div class="analytics-grid">
+                    <div>
+                        <h3>مصادر الألماس</h3>
+                        <canvas id="diamond-sources-chart"></canvas>
+                    </div>
+                    <div>
+                        <h3>مصارف الألماس</h3>
+                        <canvas id="diamond-sinks-chart"></canvas>
+                    </div>
+                </div>
+                <hr>
+                <h3>تحليل صعوبة الأسئلة (الأكثر خطأ)</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>معرف السؤال</th>
+                                <th>عدد الأخطاء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="difficulty-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ▼▼▼ تم تحديث وتعديل النوافذ المنبثقة وإضافة نوافذ جديدة ▼▼▼ -->
+
+    <!-- نموذج تعديل اللاعب (تم تحديثه) -->
+    <div id="edit-player-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>تعديل بيانات اللاعب</h2>
+            <form id="edit-player-form">
+                <input type="hidden" data-form-field="id">
+                <label for="edit-username">اسم المستخدم:</label>
+                <input type="text" id="edit-username" data-form-field="username" disabled>
+                <label for="edit-xp">الخبرة (XP):</label>
+                <input type="number" id="edit-xp" data-form-field="xp" required>
+                <label for="edit-diamonds">الألماس:</label>
+                <input type="number" id="edit-diamonds" data-form-field="diamonds" required>
+                <label for="edit-seasonal-xp">الخبرة الموسمية:</label>
+                <input type="number" id="edit-seasonal-xp" data-form-field="seasonalXp" required>
+                <label for="edit-test-attempts">محاولات الاختبار:</label>
+                <input type="number" id="edit-test-attempts" data-form-field="testAttempts" required>
+                <button type="submit" class="button-primary">حفظ التعديلات</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نموذج تعديل السؤال (تم تحديثه) -->
+    <div id="edit-question-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>تعديل قاعدة السؤال</h2>
+            <form id="edit-question-form">
+                <input type="hidden" data-form-field="id">
+                <label for="edit-question-id-display">معرف السؤال (ID):</label>
+                <input type="text" id="edit-question-id-display" data-form-field="id" disabled>
+                <label for="edit-question-level">المستوى الأدنى المطلوب:</label>
+                <input type="number" id="edit-question-level" data-form-field="requiredLevel" required>
+                <label for="edit-question-path">المسار المطلوب:</label>
+                <select id="edit-question-path" data-form-field="requiredPath" required>
+                    <option value="basic">أساسي (basic)</option>
+                    <option value="hafez">حافظ (hafez)</option>
+                    <option value="mutqen">متقن (mutqen)</option>
+                    <option value="mujaz">مجاز (mujaz)</option>
+                </select>
+                <button type="submit" class="button-primary">حفظ التعديلات</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نموذج تعديل المهمة (جديد) -->
+    <div id="edit-quest-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>تعديل المهمة</h2>
+            <form id="edit-quest-form">
+                <input type="hidden" data-form-field="id">
+                <label>معرف المهمة:</label>
+                <input type="text" data-form-field="id" disabled>
+                <label>العنوان:</label>
+                <input type="text" data-form-field="title" required>
+                <label>الوصف:</label>
+                <textarea data-form-field="description" rows="2"></textarea>
+                <label>النوع (الحدث المشغل):</label>
+                <input type="text" data-form-field="type" required>
+                <label>القيمة المستهدفة:</label>
+                <input type="number" data-form-field="targetValue" required>
+                <label>مكافأة الخبرة (XP):</label>
+                <input type="number" data-form-field="xpReward" required>
+                <label>مكافأة الألماس:</label>
+                <input type="number" data-form-field="diamondsReward" required>
+                <button type="submit" class="button-primary">حفظ التعديلات</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نموذج تعديل التحدي (جديد) -->
+    <div id="edit-challenge-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>تعديل التحدي الخاص</h2>
+            <form id="edit-challenge-form">
+                <input type="hidden" data-form-field="id">
+                <label>العنوان:</label>
+                <input type="text" data-form-field="title" required>
+                <label>الوصف:</label>
+                <textarea data-form-field="description" rows="2"></textarea>
+                <label>النوع:</label>
+                <input type="text" data-form-field="type" required>
+                <label>الهدف (بصيغة JSON):</label>
+                <textarea data-form-field="targetValue" rows="3" required></textarea>
+                <label>مكافأة الخبرة (XP):</label>
+                <input type="number" data-form-field="rewardXp" required>
+                <label>مكافأة الألماس:</label>
+                <input type="number" data-form-field="rewardDiamonds" required>
+                <label>تاريخ البدء:</label>
+                <input type="datetime-local" data-form-field="startDate" required>
+                <label>تاريخ الانتهاء:</label>
+                <input type="datetime-local" data-form-field="endDate" required>
+                <label>
+                    <input type="checkbox" data-form-field="isActive">
+                    نشط؟
+                </label>
+                <button type="submit" class="button-primary">حفظ التعديلات</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- النماذج الأخرى تبقى كما هي -->
+    <div id="edit-store-item-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>تعديل عنصر في المتجر</h2>
+            <form id="edit-store-item-form">
+                <input type="hidden" data-form-field="id">
+                <label for="edit-item-name">اسم العنصر:</label>
+                <input type="text" id="edit-item-name" data-form-field="name" required>
+                <label for="edit-item-description">الوصف:</label>
+                <textarea id="edit-item-description" data-form-field="description" rows="3"></textarea>
+                <label for="edit-item-price">السعر:</label>
+                <input type="number" id="edit-item-price" data-form-field="price" required>
+                <label for="edit-item-type">النوع:</label>
+                <input type="text" id="edit-item-type" data-form-field="type" disabled>
+                <label for="edit-item-sort-order">ترتيب العرض:</label>
+                <input type="number" id="edit-item-sort-order" data-form-field="sortOrder">
+                <button type="submit" class="button-primary">حفظ التعديلات</button>
+            </form>
+        </div>
+    </div>
+    <div id="log-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="log-modal-title">سجل نشاط اللاعب</h2>
+            <div id="log-modal-body"><p>جاري تحميل السجل...</p></div>
+        </div>
+    </div>
+
+    <!-- استدعاء المكتبات والسكريبت الرئيسي -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

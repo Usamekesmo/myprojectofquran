@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاختبار التعليمي المتقدم للحفظ</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- شاشة البداية وتسجيل الدخول -->
+    <div id="start-screen" class="container">
+        <h1>الاختبار التعليمي المتقدم للحفظ</h1>
+        <p>أدخل اسم المستخدم وكلمة المرور للمتابعة.</p>
+        
+        <input type="text" id="usernameInput" placeholder="اختر اسم المستخدم (بالعربية أو الإنجليزية)">
+        <input type="password" id="password" placeholder="أدخل كلمة المرور">
+        
+        <div class="auth-buttons">
+            <button id="loginButton" type="button">تسجيل الدخول</button>
+            <button id="signUpButton" type="button">إنشاء حساب جديد</button>
+        </div>
+        <div id="loader" class="loader hidden"></div>
+        <p id="auth-error" class="error-message hidden"></p>
+    </div>
+
+    <!-- الواجهة الرئيسية (نظام التبويبات) -->
+    <div id="main-interface" class="container hidden">
+        <div id="player-info-header"></div>
+        <hr>
+
+        <!-- شريط التبويبات للتنقل -->
+        <div class="tabs-navigation">
+            <button class="tab-button active" data-tab="test-tab">الاختبار</button>
+            <button class="tab-button" data-tab="challenges-tab">التحديات الخاصة</button>
+            <button class="tab-button" data-tab="store-tab">المتجر</button>
+            <button class="tab-button" data-tab="quests-tab">المهام اليومية</button>
+            <button class="tab-button" data-tab="friends-tab">الأصدقاء</button>
+            <button class="tab-button" data-tab="clans-tab">القبائل</button>
+            <button class="tab-button" data-tab="profile-tab">ملفي الشخصي</button>
+            <button class="tab-button" data-tab="leaderboard-tab">لوحة الصدارة</button>
+        </div>
+
+        <!-- حاويات محتوى التبويبات -->
+        <div class="tab-content-container">
+            <!-- 1. تبويب الاختبار الرئيسي -->
+            <div id="test-tab" class="tab-content active">
+                <h3>ابدأ اختبارك</h3>
+                <p>اختر صفحة من الصفحات المتاحة لك لبدء اختبارك.</p>
+                <div class="test-controls">
+                    <select id="pageSelect"></select>
+                    <select id="qariSelect"></select>
+                    <select id="questionsCount"></select>
+                    <button id="startTestButton" class="start-test-button">ابدأ الاختبار</button>
+                </div>
+            </div>
+
+            <!-- 2. تبويب التحديات الخاصة -->
+            <div id="challenges-tab" class="tab-content hidden">
+                <h3>التحديات الخاصة</h3>
+                <p>أكمل هذه التحديات المحدودة زمنيًا للحصول على مكافآت قيمة!</p>
+                <div id="special-challenges-container"></div>
+            </div>
+
+            <!-- 3. تبويب المتجر -->
+            <div id="store-tab" class="tab-content hidden">
+                <h3>المتجر</h3>
+                <div class="store-filters">
+                    <button class="filter-button active" data-filter="all">الكل</button>
+                    <button class="filter-button" data-filter="pages">صفحات</button>
+                    <button class="filter-button" data-filter="ranges">حزم</button>
+                    <button class="filter-button" data-filter="qari">قراء</button>
+                    <button class="filter-button" data-filter="consumable">مواد استهلاكية</button>
+                </div>
+                <div id="store-container" class="items-container"></div>
+            </div>
+
+            <!-- 4. تبويب المهام اليومية -->
+            <div id="quests-tab" class="tab-content hidden">
+                <h3>المهام اليومية</h3>
+                <div id="quests-container"></div>
+            </div>
+
+            <!-- 5. تبويب الأصدقاء -->
+            <div id="friends-tab" class="tab-content hidden">
+                <h3>الأصدقاء</h3>
+                <div id="friends-container"></div>
+            </div>
+
+            <!-- 6. تبويب القبائل -->
+            <div id="clans-tab" class="tab-content hidden">
+                <h3>القبائل</h3>
+                <div id="clans-container"></div>
+            </div>
+
+            <!-- 7. تبويب الملف الشخصي -->
+            <div id="profile-tab" class="tab-content hidden">
+                <h3>ملفي الشخصي وإحصائياتي</h3>
+                <div id="profile-stats-container" class="stats-grid"></div>
+            </div>
+
+            <!-- 8. تبويب لوحة الصدارة -->
+            <div id="leaderboard-tab" class="tab-content hidden">
+                <h3>لوحة الصدارة</h3>
+                <div id="season-info-container" class="season-info"></div>
+                <div class="sub-tabs-navigation">
+                    <button class="sub-tab-button active" data-leaderboard="seasonal">الموسمية</button>
+                    <button class="sub-tab-button" data-leaderboard="all-time">الدائمة</button>
+                </div>
+                <div id="leaderboard-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- باقي الشاشات والنوافذ المنبثقة -->
+    <div id="quiz-screen" class="container hidden">
+        <div id="progress-counter"></div>
+        <div id="progress-container"><div id="progress-bar"></div></div>
+        <hr>
+        <div id="question-area"></div>
+        <div id="feedback-area" class="hidden"></div>
+    </div>
+    <div id="error-review-screen" class="container hidden">
+        <h2>مراجعة الأخطاء</h2>
+        <p>هذه هي الأسئلة التي أخطأت فيها. راجعها جيداً لتثبيت الحفظ.</p>
+        <div id="error-list"></div>
+        <button id="show-final-result-button">عرض النتيجة النهائية</button>
+    </div>
+    <div id="result-screen" class="container hidden">
+        <h2>النتيجة النهائية</h2>
+        <p>أحسنت يا <span id="resultName"></span>!</p>
+        <p>نتيجتك هي: <span id="finalScore"></span></p>
+        <p>لقد كسبت: <span id="xpGained"></span> نقطة خبرة.</p>
+        <p id="level-up-message" class="hidden"></p>
+        <p id="save-status"></p>
+        <button id="reloadButton">العودة إلى القائمة الرئيسية</button>
+    </div>
+
+    <!-- النوافذ المنبثقة والإشعارات -->
+    <div id="achievement-toast" class="hidden">
+        <div class="toast-icon">🏆</div>
+        <div class="toast-content">
+            <div class="toast-title">إنجاز جديد!</div>
+            <div id="achievement-toast-name" class="toast-message"></div>
+            <div id="achievement-toast-reward" class="toast-reward"></div>
+        </div>
+    </div>
+    <div id="toast-notification" class="toast-notification"></div>
+    
+    <div id="item-details-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close-button">&times;</button>
+            <div id="modal-body"></div>
+            <button id="modal-buy-button" class="modal-buy-button">شراء</button>
+        </div>
+    </div>
+
+    <!-- النافذة المنبثقة العامة -->
+    <div id="generic-modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="generic-modal-close-btn" class="modal-close-button">&times;</button>
+            <div id="generic-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- استيراد السكربتات -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- ▼▼▼ هذا هو السطر الوحيد الذي تم تعديله ▼▼▼ -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

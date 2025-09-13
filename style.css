@@ -1,0 +1,467 @@
+/* ===================================================================
+// ==      ملف التنسيق الاحترافي - نسخة نهائية ومصححة
+// =================================================================== */
+
+/* --- 1. المتغيرات والخطوط الأساسية --- */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700&display=swap');
+
+:root {
+    --font-main: 'Cairo', sans-serif;
+    --font-title: 'Amiri', serif;
+
+    --color-primary: #00897B; /* أخضر زيتي (Teal) */
+    --color-primary-dark: #00695C;
+    --color-primary-light: #E0F2F1;
+    
+    --color-secondary: #D4AF37; /* ذهبي للإبراز */
+    --color-secondary-dark: #B8860B;
+
+    --color-background: #F8F9FA; /* أبيض مائل للرمادي */
+    --color-surface: #FFFFFF;
+    --color-text: #343A40; /* رمادي داكن للنصوص */
+    --color-text-muted: #6C757D;
+
+    --color-success: #28A745;
+    --color-danger: #DC3545;
+    --color-warning: #FFC107;
+    --color-info: #17A2B8;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.07);
+    --radius: 8px;
+}
+
+/* --- 2. الأنماط العامة والتجاوب --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.7;
+    direction: rtl;
+    text-align: right;
+    background-image: url('islamic-bg.png');
+    background-repeat: repeat;
+    background-size: auto;
+    background-attachment: fixed;
+}
+
+.container {
+    max-width: 850px;
+    margin: 1.5rem auto;
+    padding: 2rem;
+    background-color: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    border-top: 4px solid var(--color-primary);
+}
+
+.hidden { display: none !important; }
+
+h1, h2, h3, h4 {
+    font-family: var(--font-title);
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; text-align: center; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0), var(--color-primary-light), rgba(0, 0, 0, 0));
+    margin: 2rem 0;
+}
+
+/* --- 3. الأزرار وحقول الإدخال --- */
+button, .button-primary {
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+button:hover, .button-primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+button:disabled {
+    background-color: #BDBDBD;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.button-secondary { background-color: var(--color-text-muted); }
+.button-secondary:hover { background-color: var(--color-text); }
+.button-danger { background-color: var(--color-danger); }
+.button-danger:hover { background-color: #a71d2a; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-family: var(--font-main);
+    border: 1px solid #CED4DA;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* --- 4. الواجهة الرئيسية والتبويبات --- */
+#player-info-header {
+    padding: 1rem;
+    background-color: var(--color-primary-light);
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+}
+
+.tabs-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--color-primary-light);
+    margin-bottom: 1.5rem;
+}
+.tab-button {
+    background: none;
+    color: var(--color-text-muted);
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    box-shadow: none;
+    font-weight: 700;
+}
+.tab-button:hover {
+    color: var(--color-primary);
+    transform: none;
+    box-shadow: none;
+}
+.tab-button.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.tab-content {
+    padding: 1rem;
+}
+
+/* --- 5. أنماط خاصة بالمكونات (المتجر، لوحة الصدارة، إلخ) --- */
+
+/* المتجر */
+.store-filters { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.filter-button {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary-light);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+.filter-button.active {
+    background-color: var(--color-primary);
+    color: white;
+}
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+.store-item {
+    border: 1px solid #e9ecef;
+    border-radius: var(--radius);
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s;
+}
+.store-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+.item-icon { font-size: 3rem; margin-bottom: 0.5rem; color: var(--color-primary); }
+.item-price { font-weight: 700; color: var(--color-primary-dark); }
+.owned-item { background-color: var(--color-primary-light); border-color: var(--color-primary); }
+
+/* لوحة الصدارة */
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+    border-right: 4px solid var(--color-primary-light);
+}
+.leaderboard-item:nth-child(1) { border-right-color: #FFD700; }
+.leaderboard-item:nth-child(2) { border-right-color: #C0C0C0; }
+.leaderboard-item:nth-child(3) { border-right-color: #CD7F32; }
+.leaderboard-rank { font-size: 1.2rem; font-weight: 700; color: var(--color-primary-dark); width: 40px; }
+.leaderboard-name { flex-grow: 1; }
+.leaderboard-xp { font-weight: 600; color: var(--color-primary); }
+
+/* المهام والتحديات */
+.quest-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-surface);
+    padding: 1rem;
+    border-radius: var(--radius);
+    border-right: 5px solid var(--color-primary);
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+}
+.quest-card.completed { border-right-color: var(--color-secondary); }
+.quest-progress-bar-container { background-color: #e9ecef; border-radius: 1rem; height: 8px; overflow: hidden; margin-top: 0.5rem; }
+.quest-progress-bar { background-color: var(--color-success); height: 100%; }
+
+/* الأصدقاء والقبائل */
+.friend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e9ecef;
+}
+.friend-item:last-child { border-bottom: none; }
+.friend-name { font-weight: 600; }
+.friend-actions { display: flex; gap: 0.5rem; }
+.friend-actions button { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+
+/* --- 6. شاشة الاختبار --- */
+.question-text {
+    font-family: var(--font-title);
+    font-size: 1.8rem;
+    padding: 1.5rem;
+    background-color: var(--color-primary-light);
+    border-radius: var(--radius);
+    text-align: center;
+    color: var(--color-primary-dark);
+}
+.option-div {
+    margin: 0.75rem 0;
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.2rem;
+    font-family: var(--font-title);
+}
+.option-div:hover {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+}
+.correct-answer { background-color: #D4EDDA !important; border-color: var(--color-success) !important; }
+.wrong-answer { background-color: #F8D7DA !important; border-color: var(--color-danger) !important; }
+
+/* --- 7. النوافذ المنبثقة (Modal) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: var(--shadow-md);
+}
+.modal-close-button {
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    box-shadow: none;
+}
+
+/* نافذة المحادثة */
+.chat-window { display: flex; flex-direction: column; height: 70vh; max-height: 500px; }
+.chat-header { padding: 1rem; font-family: var(--font-title); font-size: 1.2rem; border-bottom: 1px solid #e9ecef; }
+.chat-messages { flex-grow: 1; overflow-y: auto; padding: 1rem; }
+.message { max-width: 80%; padding: 0.5rem 1rem; border-radius: 1.2rem; margin-bottom: 0.5rem; }
+.message.sent {
+    background-color: #FFEB3B;
+    color: #333;
+    border-bottom-right-radius: 0;
+    margin-right: auto;
+}
+
+.message.received { background-color: #e9ecef; color: var(--color-text); border-bottom-left-radius: 0; margin-left: auto; }
+.chat-input-area { display: flex; padding: 1rem; border-top: 1px solid #e9ecef; }
+#chat-message-input { margin-bottom: 0; border-radius: 1.5rem 0 0 1.5rem; }
+#send-chat-message-btn { border-radius: 0 1.5rem 1.5rem 0; }
+
+/* --- 8. التجاوب مع الشاشات الصغيرة (Mobile-First) --- */
+@media (max-width: 768px) {
+    html { font-size: 14px; }
+    .container { margin: 1rem; padding: 1.5rem; }
+    h1 { font-size: 2rem; }
+    .player-stats-grid {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .tabs-navigation {
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+    }
+    .tabs-navigation::-webkit-scrollbar { display: none; } /* Chrome, Safari */
+}
+
+.live-event-card {
+    border-color: var(--color-secondary);
+    background-color: #fffaf0;
+}
+
+.live-badge {
+    background-color: var(--color-danger);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-left: 8px;
+    animation: pulse 1.5s infinite;
+}
+
+.time-left {
+    color: var(--color-primary-dark);
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+/* =================================== */
+/* ==   كود خاص بحالة اتصال الأصدقاء   == */
+/* =================================== */
+
+.friend-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #9E9E9E;
+    margin-left: 10px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.friend-status.online {
+    background-color: #4CAF50;
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.8);
+}
+
+/* ======================================== */
+/* == تنسيقات شريط التقدم وحالة المسار == */
+/* ======================================== */
+
+/* --- 1. تنسيق شريط التقدم للمستوى --- */
+.level-progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    border: 1px solid #E0E0E0;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.level-progress-bar {
+    height: 100%;
+    background-color: #2ECC71;
+    border-radius: 6px;
+    transition: width 0.5s ease-in-out;
+    text-align: center;
+    color: white;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+/* --- 2. تنسيق نقطة المسار --- */
+.path-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* --- 3. ألوان المسارات المختلفة --- */
+.path-basic { background-color: #95A5A6; }   /* رمادي (أساسي) */
+.path-hafez { background-color: #3498DB; }   /* أزرق (حافظ) */
+.path-mutqen { background-color: #9B59B6; }  /* بنفسجي (متقن) */
+.path-mujaz { background-color: #F1C40F; }   /* ذهبي (مجاز) */
+
+/* --- 4. تعديل على حاوية معلومات اللاعب لتناسب التصميم الجديد --- */
+#player-info-header .player-stats-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+/* في نهاية ملف style.css */
+
+.equipped-title {
+    color: var(--color-secondary); /* اللون الذهبي */
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+.equipped-title-leaderboard {
+    color: var(--color-text-muted);
+    font-size: 0.8em;
+    margin-right: 8px;
+}
+
+.title-selector {
+    margin-top: 10px;
+    max-width: 300px;
+}
